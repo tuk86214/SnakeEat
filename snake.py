@@ -1,5 +1,6 @@
 import pygame
 import sys
+import random
 
 # Constants
 SCREEN_WIDTH = 600
@@ -8,6 +9,7 @@ GRID_SIZE = 20
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
+RED = (255, 0, 0)
 
 # Snake class
 class Snake:
@@ -41,6 +43,16 @@ class Snake:
         self.body.insert(0, (x, y))
         self.body.pop()
 
+        return None
+    
+# Food class
+class Food:
+    def __init__(self):
+        self.x = random.randint(0, SCREEN_WIDTH - GRID_SIZE)
+        self.y = random.randint(0, SCREEN_HEIGHT - GRID_SIZE)
+
+    def draw(self, screen):
+        pygame.draw.rect(screen, RED, pygame.Rect(self.x, self.y, GRID_SIZE, GRID_SIZE))
 
 # Initialize Pygame
 pygame.init()
