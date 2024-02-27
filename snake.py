@@ -54,6 +54,7 @@ class Food:
     def draw(self, screen):
         pygame.draw.rect(screen, RED, pygame.Rect(self.x, self.y, GRID_SIZE, GRID_SIZE))
 
+
 # Initialize Pygame
 pygame.init()
 
@@ -92,13 +93,21 @@ while running:
     collision = snake.move()
     if collision == 'collision':
         running = False
-
-    # Check if the snake ate the food
+    
+   # Check if the snake ate the food
     if snake.body[0] == (food.x, food.y):
         score += 1
-        food = Food()
-    else:
+        while True:
+            new_food = Food()
+            if new_food.x != food.x or new_food.y != food.y:
+                food = new_food
+                break
+        # Remove the last segment of the snake's body
         snake.body.pop()
+    else:
+        # If the snake didn't eat the food, move the body segments to the next position
+        for i in range(len(snake.body) - 1, 0, -1):
+            snake.body[i] = snake.body[i - 1]
 
     # Clear the screen
     screen.fill(BLACK)
@@ -106,6 +115,9 @@ while running:
     # Draw the snake
     for segment in snake.body:
         pygame.draw.rect(screen, GREEN, pygame.Rect(segment[0], segment[1], GRID_SIZE, GRID_SIZE))
+
+    # Draw the food
+    food.draw(screen)
 
     # Update the display
     pygame.display.flip()
