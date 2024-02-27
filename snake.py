@@ -18,6 +18,7 @@ class Snake:
         self.direction = 'LEFT'
 
     def move(self):
+        
         head = self.body[0]
         x, y = head
 
@@ -31,14 +32,8 @@ class Snake:
             x += GRID_SIZE
 
         # Boundary checks
-        if x < 0:
-            x = SCREEN_WIDTH - GRID_SIZE
-        elif x >= SCREEN_WIDTH:
-            x = 0
-        if y < 0:
-            y = SCREEN_HEIGHT - GRID_SIZE
-        elif y >= SCREEN_HEIGHT:
-            y = 0
+        if x < 0 or x >= SCREEN_WIDTH or y < 0 or y >= SCREEN_HEIGHT:
+            return 'collision'
 
         self.body.insert(0, (x, y))
         self.body.pop()
