@@ -18,7 +18,7 @@ class Snake:
         self.direction = 'LEFT'
 
     def move(self):
-        
+
         head = self.body[0]
         x, y = head
 
@@ -84,10 +84,6 @@ while running:
                 snake.direction = 'LEFT'
             elif event.key == pygame.K_RIGHT and snake.direction != 'LEFT':
                 snake.direction = 'RIGHT'
-
-    collision = snake.move()
-    if collision == 'collision':
-        running = False
     
    # Check if the snake ate the food
     if snake.body[0] == (food.x, food.y):
@@ -104,8 +100,12 @@ while running:
         for i in range(len(snake.body) - 1, 0, -1):
             snake.body[i] = snake.body[i - 1]
 
-    # Clear the screen
-    screen.fill(BLACK)
+
+
+    collision = snake.move()
+    if collision == 'collision':
+        screen.fill(BLACK)
+        running = False
 
     # Draw the snake
     for segment in snake.body:
@@ -118,7 +118,7 @@ while running:
     pygame.display.flip()
 
     # Cap the frame rate
-    clock.tick(10)  # 10 frames per second
+    pygame.time.delay(100)
 
 pygame.quit()
 sys.exit()
