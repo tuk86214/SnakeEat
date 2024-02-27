@@ -67,6 +67,12 @@ clock = pygame.time.Clock()
 # Create a snake object
 snake = Snake()
 
+# Create a food object
+food = Food()
+
+# Score
+score = 0
+
 # Main game loop
 running = True
 while running:
@@ -83,8 +89,16 @@ while running:
             elif event.key == pygame.K_RIGHT and snake.direction != 'LEFT':
                 snake.direction = 'RIGHT'
 
-    # Move the snake
-    snake.move()
+    collision = snake.move()
+    if collision == 'collision':
+        running = False
+
+    # Check if the snake ate the food
+    if snake.body[0] == (food.x, food.y):
+        score += 1
+        food = Food()
+    else:
+        snake.body.pop()
 
     # Clear the screen
     screen.fill(BLACK)
